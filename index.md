@@ -12,3 +12,7 @@ is this markdown?  or is this something *else* entirely?
 ---
 
 who could know?
+
+---
+
+will this link to [test]('./test.md')?
