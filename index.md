@@ -1,1 +1,1 @@
-#	hello world
+#	documenting projects & ideas
