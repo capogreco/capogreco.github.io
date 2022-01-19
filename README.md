@@ -1,2 +1,2 @@
-# thomas.capogre.co.github.io
+# thomas.capogre.co
 documenting ideas &amp; projects
