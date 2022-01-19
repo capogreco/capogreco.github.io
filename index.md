@@ -15,4 +15,4 @@ who could know?
 
 ---
 
-will this link to [test]('./test.md')?
+will this link to [test](test.md)?
