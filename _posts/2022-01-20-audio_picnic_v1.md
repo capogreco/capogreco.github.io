@@ -5,7 +5,7 @@ date       : 2022-01-20
 categories : DX∑
 ---
 
-![beautiful souls](/etc/images/audio_picnic_v1_01.jpg)
+![beautiful souls](/etc/images/audio_picnic_v1_wide.jpg)
 
 this was very lovely - many thanks to the beautiful souls who attended.
 
@@ -80,3 +80,5 @@ framing the the music ritual
 ##	other notes
 
 the text messaging worked really well.
+
+![next time](/etc/images/audio_picnic_v1_next_time.png)
