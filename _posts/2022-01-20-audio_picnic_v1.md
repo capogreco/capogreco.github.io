@@ -19,13 +19,19 @@ this was very lovely - many thanks to the beautiful souls who attended.
 
 ##	discussion
 
-within a few minutes, three issues became apparent:
+within a few minutes, four issues became apparent:
 
-0.	phones sleeping
+0.	getting connected
+0.	staying connected
 0.	REPL overload
 0.	amplitude
 
-###	phones sleeping
+
+###	getting connected
+
+not everyone was able to connect frictionlessly. all phones were able to connect eventually, but some phones did not support qr codes, and others would search the ip address as a string in a search engine rather than passing it to a web browser as a URL.
+
+###	staying connected
 
 after joining the instrument, many participants reported that, without user interaction, the phone would sleep its screen.  when this happened, the result became unpredictable:
 -	some of the phones stayed connected and active, continuing to make sound,
@@ -75,6 +81,7 @@ much of the feedback pertained to perceived loudness.
 physical amplitude
 
 framing the the music ritual
+
 
 
 ##	other notes
