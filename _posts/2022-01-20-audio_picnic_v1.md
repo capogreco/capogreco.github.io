@@ -7,7 +7,7 @@ categories : DX∑
 
 ![beautiful souls](/etc/images/audio_picnic_v1_wide.jpg)
 
-this was very lovely - many thanks to the beautiful souls who attended.
+on Sunday, Jan 16, we had a picnic - this was very lovely!  many thanks to the beautiful souls who attended.
 
 ##	footage
 
@@ -52,7 +52,7 @@ although most phones have settings that can be tweaked to stop the phone from sl
 
 ###	REPL overload
 
-I had just played a show at [Ancient World](https://www.instagram.com/p/CYc2Z-wvcve/), where I decided to try my hand at live-coding.  it was a rewarding challenge - I will most likely keep live-coding as a central workflow for my solo electronic music project, assembly, with a view to doing more live-streaming, and more involvement with [ALGORAVE](hhttps://algorave.com/about/) & [TOPLAP](https://toplap.org/about/).  inspired by my experience working with [Tidal Cycles](https://tidalcycles.org/), I decided to build a live-coding interface for the DX∑.  
+about a week earlier, on Saturday, Jan 8, I had played a show at [Ancient World](https://www.instagram.com/p/CYc2Z-wvcve/), where I decided to try my hand at live-coding.  it was a rewarding challenge - I will most likely keep live-coding as a central workflow for my solo electronic music project, assembly, with a view to doing more live-streaming, and more involvement with [ALGORAVE](hhttps://algorave.com/about/) & [TOPLAP](https://toplap.org/about/).  inspired by my experience working with [Tidal Cycles](https://tidalcycles.org/), I decided to build a live-coding interface for the DX∑.  
 
 creating a custom REPL was [fairly straightforward](https://nodejs.org/en/knowledge/REPL/how-to-create-a-custom-repl/).  you can see the REPL being used in the videos below, to both accept input and display information:
 
@@ -74,18 +74,13 @@ during the picnic, however, a considerable limitation of the REPL approach becam
 
 it seems the neatest solution to this would be to build a DX∑ Atom package, allowing users to evaluate blocks of code directly in the text editor, similar to the [Tidal Cycles plugin for Atom](https://atom.io/packages/tidalcycles).
 
-###	amplitude
+###	loudness
 
-much of the feedback pertained to perceived loudness.
-
-physical amplitude
-
-framing the the music ritual
-
+much of the feedback from participants pertained to perceived loudness - there are two sides to this: physical amplitude / cultural infrastructure (ie. "expectation management").  there is a lot to talk about here so I will dedicate my next blog post to this.
 
 
 ##	other notes
 
-the text messaging worked really well.
+the text messaging worked really well! I will post a more compreshensive discussion about this, including some notable performers who do similar things, and what such an affordance might mean for the DX∑.
 
 ![next time](/etc/images/audio_picnic_v1_next_time.png)
