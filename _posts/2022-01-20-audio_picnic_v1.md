@@ -76,7 +76,7 @@ it seems the neatest solution to this would be to build a DX∑ Atom package, al
 
 ###	loudness
 
-much of the feedback from participants pertained to perceived loudness - there are two sides to this: physical amplitude / cultural infrastructure (ie. "expectation management").  there is a lot to talk about here so I will dedicate my next blog post to this.
+much of the feedback from participants pertained to perceived loudness - there are two sides to this: physical amplitude / cultural infrastructure (ie. "expectation management").  there is a lot to talk about here so I will dedicate a separate blog post to this.
 
 
 ##	other notes
