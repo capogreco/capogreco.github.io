@@ -28,6 +28,6 @@ this was my first show live coding - somewhat nerve-wracking!  but we eventually
 
 a whole bunch of very beautiful people showed up as well - really loved the process of finding a thread in the [cycle](http://tidalcycles.org/); and kind of catching up with everyone afterwards feeling like I had somehow, narrowly and miraculously, landed the plane
 
-or the opposite of that - hard to say
+or crashed it in slow motion - hard to say which
 
 either way, 10 / 10 would recommend
