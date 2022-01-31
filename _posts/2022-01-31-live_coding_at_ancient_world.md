@@ -20,6 +20,8 @@ categories : live_coding
 
 {% include vertical_player.html id="TlUAafXjbd8" %}
 
+<br>
+
 ##	discussion:
 
 s/o to [Wellness Centre](https://www.instagram.com/wellnesscentre.music/) & [Lauren Abineri](https://www.twitch.tv/jemisahologram), who are both making really excellent work at the moment. was bloodly lovely sharing a stage ngl
