@@ -11,6 +11,13 @@ embedding is possible via [editor.p5js.org](editor.p5js.org):
 
 {% include p5_player.html id="XWhzbdPb4" %}
 
+
 embedding [SVG.js](https://svgjs.dev/docs/3.0/) is also possible:
 
 {% include svg_player.html id="test_svg" %}
+
+<br>
+
+as is embedding [elm](https://elm-lang.org/):
+
+{% include elm_player.html id="test_elm" %}

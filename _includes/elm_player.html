@@ -1,0 +1,25 @@
+<script src="https://unpkg.com/elm-canvas@2.2/elm-canvas.js"></script>
+
+<style>
+.elm-holder {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+</style>
+
+<div class="elm-holder" id="elm_div"></div>
+
+<script src="/etc/scripts/{{ include.id }}.js"></script>
+
+<script>
+
+    const app = Elm.Main.init({
+        node: document.querySelector("#elm_div"),
+        flags: {
+            innerWidth  : window.innerWidth,
+            innerHeight : window.innerHeight
+        },
+    });
+
+</script>
