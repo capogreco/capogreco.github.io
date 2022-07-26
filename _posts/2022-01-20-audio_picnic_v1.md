@@ -2,7 +2,7 @@
 layout     : post
 title      : "Audio Picnic v1"
 date       : 2022-01-20
-categories : DX∑
+categories : distributed synthesis
 ---
 
 ![beautiful souls](/etc/images/audio_picnic_v1_wide.jpg)

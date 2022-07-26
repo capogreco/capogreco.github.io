@@ -2,7 +2,7 @@
 layout     : post
 title      : "Infinite Sleeplessness"
 date       : 2022-01-21
-categories : DX∑
+categories : distributed synthesis
 ---
 
 **wrt the issue of phones going to sleep and disconnecting**

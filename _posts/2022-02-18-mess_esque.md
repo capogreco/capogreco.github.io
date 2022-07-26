@@ -2,7 +2,7 @@
 layout     : post
 title      : "Mess Esque @ Brunswick Ballroom"
 date       : 2022-02-18
-categories : DX∑
+categories : distributed synthesis
 ---
 
 #	"That was a good trick with the phones." - *Mick Turner*

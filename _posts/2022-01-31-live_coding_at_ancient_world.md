@@ -17,10 +17,7 @@ categories : live_coding
 
 
 ##	footage:
-
 {% include vertical_player.html id="TlUAafXjbd8" %}
-
-<br>
 
 ##	discussion:
 
