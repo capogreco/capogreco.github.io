@@ -2,7 +2,7 @@
 layout     : post
 title      : "Jekyll & Markdown"
 date       : 2022-08-13
-categories : RMIT Creative Coding Specialisation
+categories : RMIT CCS
 ---
 
 #   Install Jekyll
