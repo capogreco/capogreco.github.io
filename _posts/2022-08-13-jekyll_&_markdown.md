@@ -252,6 +252,26 @@ Save this, and voila -- **embedded p5 sketch**.
 
 ![p5 sketch embedded](/etc/images/p5_iframe_embedded.png)
 
+#   Add, commit, push.
 
+Return to terminal, and press `ctrl` + `C` to terminate the jekyll server.
 
+If you are using git in the terminal, add your changes with:
 
+```bash
+git add .
+```
+
+Then commit your changes with a descriptive message:
+
+```bash
+git commit -m 'first post using Jekyll'
+```
+
+And finally, push your changes to the github server with:
+
+```bash
+git push
+```
+
+Once pushed, your changes should go live on the internet within a minute or two.
