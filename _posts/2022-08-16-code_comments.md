@@ -5,15 +5,21 @@ date       : 2022-08-16
 categories : RMIT CCS
 ---
 
-When reading code written in computer languages, even ones we are familiar with, it can sometimes be difficult to understand what is going on.
+When reading code written in computer languages, even ones we are familiar with, it can sometimes be difficult to understand what is going on.  Comments are here to help other humans, including your future self, understand how the code is doing what it does.
 
-Comments in javascript are indicated by two forward slashes.  They can either go at the start of a line, in which case the whole line is a comment, or they can go after some code, in which case the comment is whatever is to the right of the two forward slashes.
+Comments are ignored by the computer.
+
+In javascript, comments are indicated by two forward slashes.  They can either go at the start of a line, in which case the whole line is a comment, or they can go after some code, in which case the comment is whatever is to the right of the two forward slashes.
 
 ```javascript
 // this is a code comment
 
 const a = 40 // declaring variable "a", and assigning to it the value 40
 ```
+
+You can usually press `cmd` + `/`, or something similar, to comment out or uncomment lines, or whole blocks of selected code.
+
+#   Multi-line comments
 
 For multi-line comments, bookend your text with `/*` and `*/`
 
@@ -44,7 +50,7 @@ Multi-line comments can be used to do ascii art, if that is your style:
 
 #   Understandability
 
-Ultimately, comments necessary to help other humans understand your code.  
+Ultimately, you should be using comments to help make your code understandable to humans.  
 
 Consider this sketch:  
 
