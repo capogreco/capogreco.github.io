@@ -43,7 +43,7 @@ TypeError: Assignment to constant variable.
 
 When starting out, there is nothing wrong with using `let` to declare all your variables.  Using `const`, however, can improve memory allocation efficiency.
 
-I will demonstrate briefly a handful ways you can use variables.
+I will demonstrate briefly two important ways you can use variables.
 
 ##  Using a variable to keep track of a changing value
 
@@ -204,7 +204,7 @@ This second example is preferrable to the first, even though the first is shorte
 
 Note that in this case we have declared variables along the way, in the local scope, using `const`, with descriptive names, in order to hold a value which we then use in the next step.  
 
-Once the results are used to draw the circle, the values of the variables can be lost at the termination of the function.  The next iteration of the function will derive new values for these variables with a newly incremented `frameCount` value.
+Once the results are used to draw the circle, the values of the variables can be lost at the termination of the function, ie. they do not need to persist beyond the scope of the local function.  The next iteration of the function will derive new values for these variables from a newly incremented `frameCount` value.
 
 <div align="center"><iframe width=400 height=442 src="https://editor.p5js.org/capogreco/full/bGoOskBGe"></iframe></div>
 
