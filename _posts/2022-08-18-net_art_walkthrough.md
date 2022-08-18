@@ -198,6 +198,14 @@ Save that, and cycle over to the browser.  The canvas element should now be fitt
 
 ![nicely fitting turquoise canvas](/etc/images/net_art_turquoise_fit.png)
 
+Head back to VS Code, and toggle to the integrated terminal by pressing `ctrl` + `` ` ``.  Terminate the server by pressing `ctrl` + `C`.
+
+Add your changes to git with `git add .`
+
+Commit your changes with `git commit -m 'net art initialised and working'`
+
+And push, with `git push`
+
 Now it's over to you: **draw a pink square right in the centre**.
 
 ![turquoise canvas with pink square in the centre](/etc/images/net_art_pink_square.png)
