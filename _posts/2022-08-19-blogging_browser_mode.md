@@ -50,4 +50,4 @@ Underneath, you can write your blog post in markdown.
 
 When you have finished, hit `shift` + `ctrl` + `G` to go to source control (or click the source control icon on the left).
 
-Type a commit message, like `github pages blog init, first post`, and press `ctrl` + `enter` to commit and push.
+Type a commit message, like `github pages blog init, first post`, and press `cmd` + `enter` to commit and push.
