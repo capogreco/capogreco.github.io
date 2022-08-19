@@ -46,8 +46,33 @@ categories : RMIT CCS
 
 Choose a title and category for your post, and change the date to be whatever the date is.
 
-Underneath, you can write your blog post in markdown.
+Underneath, you can write your blog post in markdown.  You can learn markdown's basic syntax [here](https://www.markdownguide.org/basic-syntax/), and some extended techniques [here](https://www.markdownguide.org/extended-syntax/).
+
+To embed a p5 sketch, navigate to the sketch in the p5 online editor, and go to **File** -> **Share**.  Click **Embed** to copy the relevant html to your clipboard.  Take note of the dimensions of the sketch.
+
+Copy the clipboard into your markdown file.  It should look something like this:
+
+```html
+<iframe src="https://editor.p5js.org/capogreco/full/CLb2LWbBU"></iframe>
+```
+
+As is, this will render an iframe that is too small:  
+
+<iframe src="https://editor.p5js.org/capogreco/full/CLb2LWbBU"></iframe>
+
+
+To adjust the size, add `width` and `height` parameters inside the opening `<iframe>` tag, like this:
+
+```html
+<iframe width=400 height=442 src="https://editor.p5js.org/capogreco/full/CLb2LWbBU"></iframe>
+```
+
+The value for `width` will be the width of the canvas you created in the p5 sketch.  The `height` will be the height of the canvas, plus 42 pixels, to account for the p5 header that comes with the embed.
+
+<iframe width=400 height=442 src="https://editor.p5js.org/capogreco/full/CLb2LWbBU"></iframe>
+
+#   Commit & Push
 
 When you have finished, hit `shift` + `ctrl` + `G` to go to source control (or click the source control icon on the left).
 
-Type a commit message, like `github pages blog init, first post`, and press `cmd` + `enter` to commit and push.
+Type a commit message, like `github pages blog init, first post`, and press `ctrl` + `enter` on Windows (or `cmd` + `enter` on macOS) to commit and push.
