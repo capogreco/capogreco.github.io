@@ -48,6 +48,8 @@ Choose a title and category for your post, and change the date to be whatever th
 
 Underneath, you can write your blog post in markdown.  You can learn markdown's basic syntax [here](https://www.markdownguide.org/basic-syntax/), and some extended techniques [here](https://www.markdownguide.org/extended-syntax/).
 
+#   Embedding a p5 sketch
+
 To embed a p5 sketch, navigate to the sketch in the p5 online editor, and go to **File** -> **Share**.  Click **Embed** to copy the relevant html to your clipboard.  Take note of the dimensions of the sketch.
 
 Copy the clipboard into your markdown file.  It should look something like this:
