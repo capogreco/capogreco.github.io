@@ -25,7 +25,7 @@ As described [here](https://jekyllrb.com/docs/installation/macos/), on macOS you
     ruby-install ruby
     ```
 4.  **tell your shell to use chruby**, by copying and pasting each of these commands in terminal:
-    -   if your shell is zsh:
+    -   if your shell is **zsh**:
         -   ```
             echo "source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh" >> ~/.zshrc
             ```
@@ -35,7 +35,7 @@ As described [here](https://jekyllrb.com/docs/installation/macos/), on macOS you
         -   ```
             echo "chruby ruby-3.1.2" >> ~/.zshrc
             ```
-    -   if your shell is bash:
+    -   if your shell is **bash**:
         -   ```
             echo "source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh" >> ~/.bash_profile
             ```
@@ -45,7 +45,7 @@ As described [here](https://jekyllrb.com/docs/installation/macos/), on macOS you
         -   ```
             echo "chruby ruby-3.1.2" >> ~/.bash_profile
             ```
-    -   if your shell is fish, you may need to do something along the lines of [this](https://talk.jekyllrb.com/t/how-to-setup-chruby-for-fish-shell-instead-of-regular-bash-zsh/7390/2)
+    -   if your shell is **fish**, you may need to do something along the lines of what is mentioned [here](https://talk.jekyllrb.com/t/how-to-setup-chruby-for-fish-shell-instead-of-regular-bash-zsh/7390/2)
 5.  **quit and relaunch terminal**
 6.  **check if ruby is working**, by typing the following command into terminal:
     -   `ruby -v` -> this should output the version of ruby you have installed
@@ -104,7 +104,7 @@ Once the folder is open in VS Code, it should look like this:
 
 ![fresh jekyll in vscode](/etc/images/fresh_jekyll_code.png)
 
-Press `cmd` + `tab` to cycle back to terminal, and type `jekyll serve --livereload`
+Press `cmd` + `tab` to cycle back to terminal, and type `bundle exec jekyll serve --livereload`
 
 **this did not initially work for me -- I had to install webrick as per [this thread](https://talk.jekyllrb.com/t/load-error-cannot-load-such-file-webrick/5417/6)*
 
@@ -112,9 +112,7 @@ With any luck, your terminal should output something like this:
 
 ![fresh serve in terminal](/etc/images/fresh_serve_terminal.png)
 
-Copy the URL next to `Server Adress:`.  It will most likely be `http://127.0.0.1:4000/` or something similar.
-
-Cycle to a browser and open a new tab at that URL.  It should look something like this:
+`cmd` + clicking on the URL next to `Server Adress:`  (it will most likely be `http://127.0.0.1:4000/` or something similar) should take you to a page that looks something like this:
 
 ![fresh serve in a browser](/etc/images/fresh_serve_browser.png)
 
