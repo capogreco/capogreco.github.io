@@ -13,15 +13,15 @@ If you already have a github repo named `username.github.io` - delete it.  You c
 
 Then go [here](https://github.com/capogreco/fresh_jekyll), and click **Use this template**.  Alternatively, you should be able to just click [here](https://github.com/capogreco/fresh_jekyll/generate).
 
-In either case, you should be asked to give the new repo a name -- give it the name `your-username.github.io`, where `your-username` is your github username.
+In either case, you should be asked to give the new repo a name -- give it the name `username.github.io`, where `username` is your github username.
 
-After few minutes, the blog should be live at the URL: `your-username.github.io`
+After few minutes, the blog should be live at the URL: `username.github.io`
 
 #   Customising your blog
 
-Navigate back to your blog repo on `github.com`, and press `.`
+Navigate back to your blog repo on `github.com`. The URL should be something like `github.com/username/username.github.io` (where `username` is your github username).
 
-This should open VS Code *in the browser*.  
+While you are on this page, pressing `.` should open VS Code *in the browser*.  
 
 If the file explorer is not already open on the left, `cmd` + `shift` + `E` should open it.
 
