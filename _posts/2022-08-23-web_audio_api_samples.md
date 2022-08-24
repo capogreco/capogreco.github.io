@@ -5,8 +5,6 @@ date       : 2022-08-23
 categories : RMIT CCS
 ---
 
-#   Harness browsers' audio capabilities directly
-
 API stands for "Application Programming Interface" -- they specify protocols that allow bits of software to plug into each other.  We have already looked at the Canvas API, which plugs javascript into the canvas element, and in fact the Document Object Model (DOM), is itself an API, as it specifies how javascript can plug into the structure of an html document.  You can read a more comprehensive explanation of what an API is [here](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Introduction).
 
 The [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) connects javascript to the parts of the browser that processes audio, and which connects to the operating system's audio output device.  This API is useful to know as p5's [sound library](https://p5js.org/reference/#/libraries/p5.sound) tends to be a bit buggy, and get less maintenance than the regular p5 library.  By working with Web Audio API directly, you bypass the need to deal with the p5 sound library altogether.
@@ -110,9 +108,9 @@ function click_handler (mouse_event) {
         // to get a ratio between 0 - 1
         const x_ratio = x_pos / window.innerWidth
 
-        // pass in the ratio + 1
+        // pass in 2 to the power of the ratio
         // this value will become the playback rate
-        play_vibraphone (x_ratio + 1)
+        play_vibraphone (2 ** x_ratio)
     }
 }
 
@@ -180,9 +178,10 @@ function click_handler (e) {
         audio_context.resume ()
         cnv.style.backgroundColor = `forestgreen`
     } else {
-        const x_pos = e.clientX
+        const x_pos = e.offsetX
+        console.log (x_pos)
         const x_ratio = x_pos / cnv.width
-        play_vibraphone (x_ratio + 1)
+        play_vibraphone (2 ** x_ratio)
     }
 }
 async function get_vibraphone () {
