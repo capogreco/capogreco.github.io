@@ -205,3 +205,5 @@ function draw_frame () {
 </script>
 
 Don't forget to call `requestAnimationFrame` inside the `draw_frame` function.  Essentially, this is a way for `draw_frame` to call itself -- it is a type of **[recursive function](https://developer.mozilla.org/en-US/docs/Glossary/Recursion)**!  We will return to this topic in a future post.
+
+Learn more about the Canvas API [here](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API).
