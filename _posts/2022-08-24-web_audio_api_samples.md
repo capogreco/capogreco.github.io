@@ -1,11 +1,11 @@
 ---
 layout     : post
 title      : "Web Audio API: Samples"
-date       : 2022-08-23
+date       : 2022-08-24
 categories : RMIT CCS
 ---
 
-API stands for "Application Programming Interface" -- they specify protocols that allow bits of software to plug into each other.  We have already looked at the Canvas API, which plugs javascript into the canvas element, and in fact the Document Object Model (DOM), is itself an API, as it specifies how javascript can plug into the structure of an html document.  You can read a more comprehensive explanation of what an API is [here](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Introduction).
+API stands for "Application Programming Interface" -- they specify protocols that allow bits of software to plug into each other.  We have already looked at the Canvas API, which plugs javascript into the canvas element.  In fact the Document Object Model (DOM) is itself an API, as it specifies how javascript can plug into the structure of an html document.  You can read a more comprehensive explanation of what an API is [here](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Introduction).
 
 The [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) connects javascript to the parts of the browser that processes audio, and which connects to the operating system's audio output device.  This API is useful to know as p5's [sound library](https://p5js.org/reference/#/libraries/p5.sound) tends to be a bit buggy, and get less maintenance than the regular p5 library.  By working with Web Audio API directly, you bypass the need to deal with the p5 sound library altogether.
 
@@ -13,10 +13,9 @@ The [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_A
 
 One of the things that differentiates ears from eyes, is the absence of lids.  Eyes have them, but ears do not. We have less control over how sound is registered by our ears, and so we do rely somewhat on the people and architecture and technology in our immediate surroundings to help us mediate the volume, intensity, clarity, etc. of sonic phenomena.
 
-In any case, at some point, some people, somewhere, decided that an `AudioContext` object, the object that allows you to render audio to the operating system's audio device, must always begin its life in a *suspended* (inactive) state, and is only allowed become active once a user gesture has been registered.  In other words, when someone visits your webpage, you are not allowed to blast them with audio without some minimal form of interaction from them.
+For this reason, it seems sensible that some people, somewhere, at some point, decided that the `AudioContext` object, the object that allows you to render audio to the operating system's audio device, must always begin its life in a *suspended* (inactive) state, and is only allowed become active once a user gesture has been registered.  In other words, when someone visits your webpage, you are not allowed to blast them with audio without some minimal form of interaction from them.
 
 Consider the following code:
-
 
 ```javascript
 document.body.style.margin   = 0
@@ -113,7 +112,6 @@ function click_handler (mouse_event) {
         play_vibraphone (2 ** x_ratio)
     }
 }
-
 
 // the keyword async specifies that the function we
 // are declaring here is asynchronous.  Which means
