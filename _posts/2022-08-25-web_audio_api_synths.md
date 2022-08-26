@@ -7,6 +7,7 @@ categories : RMIT CCS
 
 It is an underappreciated fact that modern browsers already contain all the necessary components required to build a software synthesiser. In order to form a functional synthesiser, these components (oscillators, amplifiers, filters, etc.) need to be wired together using Web Audio API.  In this post, we will be looking at how this works.
 
+
 ##  Anatomy of a synthesiser
 
 ![diagram of input, oscillator, filter, amplifier, output](/etc/images/landr_subtractive_synthesis.jpg)

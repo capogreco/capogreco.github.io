@@ -158,6 +158,8 @@ function play_vibraphone (rate) {
 
 Learn more about `async` / `await` [here](https://youtu.be/XO77Fib9tSI), and [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await). 
 
+Learn more about arrow functions [here](https://youtu.be/mrYMzpbFz18), and [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions).
+
 Learn more about click events [here](https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event).
 
 
