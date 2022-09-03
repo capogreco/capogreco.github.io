@@ -14,8 +14,10 @@ categories : RMIT CCS
     recursion_frame.height = recursion_frame.width
     const i = !location.search ? 1 :
       Number (location.search.split ("?").pop ()) + 1
-    const path = `/rmit/ccs/2022/09/03/recursion.html?${ i }`
-    recursion_frame.src = `http://thomas.capogre.co` + path
+    if (i < 12) {
+        const path = `/rmit/ccs/2022/09/03/recursion.html?${ i }`
+        recursion_frame.src = `http://thomas.capogre.co` + path
+    }
 </script>
 
 ```html
@@ -28,8 +30,9 @@ categories : RMIT CCS
     recursion_frame.height = recursion_frame.width
     const i = !location.search ? 1 :
       Number (location.search.split ("?").pop ()) + 1
-    if (i > 12) return
-    const path = `/rmit/ccs/2022/09/03/recursion.html?${ i }`
-    recursion_frame.src = `http://thomas.capogre.co` + path
+    if (i < 12) {
+        const path = `/rmit/ccs/2022/09/03/recursion.html?${ i }`
+        recursion_frame.src = `http://thomas.capogre.co` + path
+    }
 </script>
 ```
