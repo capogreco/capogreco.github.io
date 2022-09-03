@@ -424,7 +424,7 @@ function play_note (note, length) {
         amp.gain.setValueAtTime (0, now)
 
         // take 0.02 seconds to go to 0.4, linearly
-        amp.gain.linearRampToValueAtTime (0.4, now + 0.02)
+        amp.gain.linearRampToValueAtTime (0.1, now + 0.02)
 
         // this method does not like going to all the way to 0
         // so take length seconds to go to 0.0001, exponentially
@@ -579,20 +579,55 @@ Note that in the above code, the only thing that is making sound is the `play_no
 
 ##  Persistent Synths
 
-We can also use **objects** to organise how we interface with the Web Audio API.
+For this next example we will organise our usage of the Web Audio API using **objects**.  
 
-Consider the following code:
+However, for this sketch, I will want to use `Vector` objects, are part of the p5 library.  Luckily for us, the vectors are fairly simple and we can write an implementation ourselves: 
+
+
 
 ```javascript
+class Vector {
+    constructor (x, y) {
+        this.x = x
+        this.y = y
+    }
 
+    add (v) {
+        this.x += v.x
+        this.y += v.y
+    }
+
+    subtract (v) {
+        this.x -= v.x
+        this.y -= v.y
+    }
+
+    mult (m) {
+        this.x *= m
+        this.y *= m
+    }
+
+    mag () { // using a^2 + b^2 = c^2
+        return ((this.x ** 2) + (this.y ** 2)) ** 0.5
+    }
+
+    setMag (m) {
+        this.mult (m / this.mag ())
+    }
+
+    clone () {
+        return new Vector (this.x, this.y)
+    }
+}
+
+function vector_from_angle (angle, magnitude) {
+    const x = magnitude * Math.cos (angle)
+    const y = magnitude * Math.sin (angle)
+    return new Vector (x, y)
+}
 ```
 
 <script>
-    function rand_col () {
-        const h = Math.floor (Math.random () * 360)
-        return `hsl(${ h }, 100%, 50%)`
-    }
-
     class Vector {
         constructor (x, y) {
             this.x = x
@@ -632,74 +667,220 @@ Consider the following code:
         const y = magnitude * Math.sin (angle)
         return new Vector (x, y)
     }
+</script>
 
-    class Sound_Square {
-        constructor (position, length, note, c_context, a_context) {
-            this.pos   = position
-            this.len   = length
-            this.note  = note
-            this.ctx   = c_context
-            this.audio = a_context
+I want to define behaviour for two types of objects: a stationary square, and a moving particle.  Lets look at the particle first.
 
-            const mid_x = this.pos.x + (this.len / 2)
-            const mid_y = this.pos.y + (this.len / 2)
-            this.mid = new Vector (mid_x, mid_y)
+In terms of data, each particle will need a **position**, a **velocity**, and an **acceleration**.  In terms of behaviour, I want each particle to **respawn** over the other side of the canvas once it has moved out of frame, and I want them to be able to **collide** with the squares.  Additionally, I want them to **gravitate** towards the squares via a gravity-like force that adheres to the [inverse-square law](https://en.wikipedia.org/wiki/Inverse-square_law).
 
-            this.col   = `deeppink`
+Consider the following `class` definition:
 
-            this.osc = this.audio.createOscillator ()
-            this.osc.type = 'sawtooth'
-            this.osc.frequency.value = 0
-            this.osc.start ()
+```javascript
+// defining a class
+class Particle {
 
-            this.amp = this.audio.createGain ()
-            this.amp.gain.value = 0.0001
+    // defining the arguments we will need to 
+    // instatiate a new instance of the class
+    constructor (position, velocity, acceleration, c_context) {
 
-            this.pan = this.audio.createStereoPanner ()
-            this.pan.pan.value = (this.pos.x / this.ctx.canvas.width) * 2 - 1
+        // we will treat position, velocity, 
+        // and acceleration, as vector objects
+        this.pos = position
+        this.vel = velocity
+        this.acc = acceleration
 
-            this.osc.connect (this.amp)
-                .connect (this.pan)
-                .connect (this.audio.destination)
+        // rather than referring to the canvas context
+        // in global variable, it is cleaner and more convenient
+        // to pass a reference to it to the constructor 
+        // to store on the particle object
+        this.ctx = c_context
+    }
+
+    // defining how the particle is to move
+    move () {
+
+        // acceleration affects velocity
+        this.vel.add (this.acc)
+
+        // velocity affects position
+        this.pos.add (this.vel)
+
+        // reset accelreation vector
+        // so we can add fresh gravitation later
+        this.acc.mult (0)
+
+        // this.ctx is the canvas context
+        // here I am extracting the actual canvas
+        // and storing it in 'c' for convenience
+        const c = this.ctx.canvas
+
+        // conditional logic to respawn
+        // on the opposite side of the frame
+        if (this.pos.x < 0) {
+            this.pos.x = c.width
         }
 
-        draw () {
-            this.ctx.fillStyle = this.col
-            this.ctx.fillRect (this.pos.x, this.pos.y, this.len, this.len)
+        if (this.pos.x > c.width) {
+            this.pos.x = 0
         }
 
-        collision () {
-            const cps  = 440 * (2 ** ((this.note - 69) / 12))
-            this.osc.frequency.value = cps
-            this.sound ()
+        if (this.pos.y < 0) {
+            this.pos.y = c.height
         }
 
-        sound () {
-            const now = this.audio.currentTime
-            this.amp.gain.cancelScheduledValues (now)
-            this.amp.gain.setValueAtTime (this.amp.gain.value, now)
-            this.amp.gain.linearRampToValueAtTime (0.1, now + 0.02)
-            this.amp.gain.exponentialRampToValueAtTime (0.000001, now + 8)
+        if (this.pos.y > c.height) {
+            this.pos.y = 0
         }
     }
 
+    // draw to canvas
+    draw () {
+
+        // referring to the canvas context
+        // stored on each particle
+        // fill colour = white
+        this.ctx.fillStyle = `white`
+
+        // the particle is a 3 x 3 square
+        // the position is the middle pixel
+        this.ctx.fillRect (this.pos.x - 1, this.pos.y - 1, 3, 3)
+    }
+
+    // this method accepts a square object as its argument
+    // then checks to see whther the particle's position
+    // is inside that square
+    check_collision (s) {
+
+        // conditional logic for the four boundaries 
+        // of the square
+        const inside_l = this.pos.x > s.pos.x
+        const inside_r = this.pos.x < s.pos.x + s.len
+        const inside_t = this.pos.y > s.pos.y
+        const inside_b = this.pos.y < s.pos.y + s.len
+
+        // if the particle is inside all of those boundaries
+        if (inside_l && inside_r && inside_t && inside_b) {
+
+            // call the collision method on 
+            // the square that was passed in
+            s.collision ()
+
+            // calculate the distance to the center 
+            // of the square along the x and y axes
+            const x_distance = Math.abs (s.mid.x - this.pos.x)
+            const y_distance = Math.abs (s.mid.y - this.pos.y)
+
+            // x distance is larger -> horizontal collision
+            // pass the square to the x_collision method
+            if (x_distance > y_distance) this.x_collision (s)
+
+            // y distance is larger -> vertical collision
+            // pass the square to the y_collision method
+            else this.y_collision (s)
+        }
+    }
+
+    // defining the behaviour for a horizontal collision
+    x_collision (s) {
+
+        // horizontal velocity is reversed (and then some)
+        this.vel.x *= -1.01
+
+        // if the x velocity is positive 
+        // put particle on the right side
+        // otherwise put it on the left
+        this.pos.x = this.vel.x > 0 ? s.pos.x + s.len : s.pos.x
+
+        // give it a touch of random y velocity
+        // to keep things interesting
+        this.vel.y += ((Math.random () * 2) - 1) * 0.02
+    }
+
+    // defining the behaviour for a vertical collision
+    y_collision (s) {
+
+        // vertical velocity is reversed (and then some)
+        this.vel.y *= -1.01
+
+        // if the y velocity is positive 
+        // put particle on the bottom
+        // otherwise put it on the top
+        this.pos.y = this.vel.y > 0 ? s.pos.y + s.len : s.pos.y 
+
+        // give it a touch of random x velocity
+        // to keep things interesting
+        this.vel.x += ((Math.random () * 2) - 1) * 0.02
+    }
+
+    // the gravitate method accepts a square as an argument
+    // and then applies an acceleration force on the particle 
+    // towards that square
+    gravitate (s) {
+
+        // make a copy of the position of 
+        // the square's centre
+        const to_square = s.mid.clone ()
+
+        // subtracting the position of the particle
+        // yields the vector that goes from 
+        // the particle, to the square
+        to_square.subtract (this.pos)
+
+        // use the inverse-square rule
+        // to calculate a gravitational force
+        const grav = 128 / (to_square.mag () ** 2)
+
+        // set the magnitude of the vector towards
+        // the square to be equal to the gravitation
+        to_square.setMag (grav)
+
+        // add this vector to the particle's
+        // acceleration vector
+        this.acc.add (to_square)
+    }
+}
+```
+
+<script>
     class Particle {
+
+        // defining the arguments we will need to 
+        // instatiate a new instance of the class
         constructor (position, velocity, acceleration, c_context) {
+
+            // we will treat position, velocity, 
+            // and acceleration, as vector objects
             this.pos = position
             this.vel = velocity
             this.acc = acceleration
 
-            this.canvas = c_context
-
+            // rather than referring to the canvas context
+            // in global variable, it is cleaner and more convenient
+            // to pass a reference to it to the constructor 
+            // to store on the particle object
+            this.ctx = c_context
         }
 
+        // defining how the particle is to move
         move () {
+
+            // acceleration affects velocity
             this.vel.add (this.acc)
+
+            // velocity affects position
             this.pos.add (this.vel)
+
+            // reset accelreation vector
+            // so we can add fresh gravitation later
             this.acc.mult (0)
 
-            const c = this.canvas.canvas
+            // this.ctx is the canvas context
+            // here I am extracting the actual canvas
+            // and storing it in 'c' for convenience
+            const c = this.ctx.canvas
 
+            // conditional logic to respawn
+            // on the opposite side of the frame
             if (this.pos.x < 0) {
                 this.pos.x = c.width
             }
@@ -717,50 +898,418 @@ Consider the following code:
             }
         }
 
-
+        // draw to canvas
         draw () {
-            this.canvas.fillStyle = `white`
-            this.canvas.fillRect (this.pos.x - 1, this.pos.y - 1, 3, 3)
+
+            // referring to the canvas context
+            // stored on each particle
+            // fill colour = white
+            this.ctx.fillStyle = `white`
+
+            // the particle is a 3 x 3 square
+            // the position is the middle pixel
+            this.ctx.fillRect (this.pos.x - 1, this.pos.y - 1, 3, 3)
         }
 
+        // this method accepts a square object as its argument
+        // then checks to see whther the particle's position
+        // is inside that square
         check_collision (s) {
+
+            // conditional logic for the four boundaries 
+            // of the square
             const inside_l = this.pos.x > s.pos.x
             const inside_r = this.pos.x < s.pos.x + s.len
             const inside_t = this.pos.y > s.pos.y
             const inside_b = this.pos.y < s.pos.y + s.len
 
+            // if the particle is inside all of those boundaries
             if (inside_l && inside_r && inside_t && inside_b) {
+
+                // call the collision method on 
+                // the square that was passed in
                 s.collision ()
 
+                // calculate the distance to the center 
+                // of the square along the x and y axes
                 const x_distance = Math.abs (s.mid.x - this.pos.x)
                 const y_distance = Math.abs (s.mid.y - this.pos.y)
+
+                // x distance is larger -> horizontal collision
+                // pass the square to the x_collision method
                 if (x_distance > y_distance) this.x_collision (s)
+
+                // y distance is larger -> vertical collision
+                // pass the square to the y_collision method
                 else this.y_collision (s)
             }
-
-            // if (inside_t && inside_b) {
-            //     s.collision ()
-            // }
         }
 
+        // defining the behaviour for a horizontal collision
+        x_collision (s) {
+
+            // horizontal velocity is reversed (and then some)
+            this.vel.x *= -1.01
+
+            // if the x velocity is positive 
+            // put particle on the right side
+            // otherwise put it on the left
+            this.pos.x = this.vel.x > 0 ? s.pos.x + s.len : s.pos.x
+
+            // give it a touch of random y velocity
+            // to keep things interesting
+            this.vel.y += ((Math.random () * 2) - 1) * 0.02
+        }
+
+        // defining the behaviour for a vertical collision
+        y_collision (s) {
+
+            // vertical velocity is reversed (and then some)
+            this.vel.y *= -1.01
+
+            // if the y velocity is positive 
+            // put particle on the bottom
+            // otherwise put it on the top
+            this.pos.y = this.vel.y > 0 ? s.pos.y + s.len : s.pos.y 
+
+            // give it a touch of random x velocity
+            // to keep things interesting
+            this.vel.x += ((Math.random () * 2) - 1) * 0.02
+        }
+
+        // the gravitate method accepts a square as an argument
+        // and then applies an acceleration force on the particle 
+        // towards that square
         gravitate (s) {
+
+            // make a copy of the position of 
+            // the square's centre
             const to_square = s.mid.clone ()
+
+            // subtracting the position of the particle
+            // yields the vector that goes from 
+            // the particle, to the square
             to_square.subtract (this.pos)
-            const grav = 0.3 / to_square.mag ()
+
+            // use the inverse-square rule
+            // to calculate a gravitational force
+            const grav = 128 / (to_square.mag () ** 2)
+
+            // set the magnitude of the vector towards
+            // the square to be equal to the gravitation
             to_square.setMag (grav)
+
+            // add this vector to the particle's
+            // acceleration vector
             this.acc.add (to_square)
         }
+    }
+</script>
 
-        x_collision (s) {
-            this.vel.x *= -1
-            this.pos.x = this.vel.x > 0 ? s.pos.x + s.len : s.pos.x 
+Note that in the `.x_collision` and `.y_collision` methods above, I am using the [ternary operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator).  Essentially, it works like this:
+
+```javascript
+const foo = conditional > statement ? result_if_true : result_if_false
+```
+
+The important insight being that if the conditional statement before the `?` is true, what gets assigned to `foo` is the term before the `:`.  If the conditional statement is false, what gets assigned to `foo` is the term after the `:`.
+
+Next we will define a class for our squares.  We want the squares to have a **position**, a side **length**, and a specific **note** that they will sonify when a particle collides with them.  In terms of behaviour, we want these squares to be able to **draw to the canvas**, **make a sound** when collided into, and we want to be able to **turn them on and off**.
+
+We will call the class `Sound_Square`:
+
+```javascript
+// defining a class
+class Sound_Square {
+
+    // defining a constructor that accepts the arguments 
+    // required to instantiate a new instance of the object
+    constructor (position, length, note, c_context, a_context) {
+
+        // we will treat position as a vector
+        this.pos   = position
+
+        // side length value
+        this.len   = length
+
+        // midi note value
+        this.note  = note
+
+        // reference to the canvas context
+        this.ctx   = c_context
+
+        // reference to the audio context
+        this.audio = a_context
+
+        // calculating the position of the center
+        // of the square
+        const mid_x = this.pos.x + (this.len / 2)
+        const mid_y = this.pos.y + (this.len / 2)
+
+        // storing this position as a vector
+        this.mid = new Vector (mid_x, mid_y)
+
+        // make the squares pink
+        this.col     = `deeppink`
+
+        // on / off state
+        // false value -> silent
+        this.running = true
+
+        // storing a new oscillator
+        // on the object
+        this.osc = this.audio.createOscillator ()
+
+        // lets use a sawtooth oscillator
+        this.osc.type = 'sawtooth'
+
+        // calculate the frequency of the note it should play
+        const cps  = 440 * (2 ** ((this.note - 69) / 12))
+
+        // set the oscillator to that frequency
+        this.osc.frequency.value = cps
+
+        // start the oscillator
+        this.osc.start ()
+
+        // store a new gain node
+        // on the object
+        this.amp = this.audio.createGain ()
+
+        // setting the gain to functional silence
+        this.amp.gain.value = 0.0001
+
+        // we want to create a stereo field
+        // where squares on the left are heard
+        // more in the left channel
+        // so we create a stereo panner node
+        // to store on the object
+        this.pan = this.audio.createStereoPanner ()
+
+        // set it to a value that corresponds with
+        // the x position of the square
+        this.pan.pan.value = (this.mid.x / this.ctx.canvas.width) * 2 - 1
+
+        // wire the nodes together:
+        // osc -> amp -> pan -> output
+        this.osc.connect (this.amp)
+            .connect (this.pan)
+            .connect (this.audio.destination)
+    }
+
+    // define a draw method
+    draw () {
+
+        // fill with the colour stored in the .col property
+        this.ctx.fillStyle = this.col
+
+        // draw a square at the coordinates held 
+        // in the .pos vector, with a width and height
+        // equal to the value stored in the .len property
+        this.ctx.fillRect (this.pos.x, this.pos.y, this.len, this.len)
+    }
+
+    // when a particle detects that it has collided with a square
+    // it will call this method on the square
+    collision () {
+
+        // only make a sound if the square is running
+        if (this.running) {
+
+            // get the current time from the audio context
+            const now = this.audio.currentTime
+
+            // because many particles will be hitting these squares
+            // the amp node will be recieving lots many competing
+            // sets of instructions.  By cancelling the scheduled
+            // values we are telling the amp that the only set of
+            // instructions that we are interested in is the most 
+            // recent one
+            this.amp.gain.cancelScheduledValues (now)
+
+            // set the gain right now, to what it already is
+            // this might seem redundant, but it helps the API
+            // understand the timing of envelope that it needs to make
+            this.amp.gain.setValueAtTime (this.amp.gain.value, now)
+
+            // ramp from whatever value it was at, to 0.1, in 20 ms
+            this.amp.gain.linearRampToValueAtTime (0.1, now + 0.02)
+
+            // then ramp down exponentially, to 0.000001, in 8 s
+            this.amp.gain.exponentialRampToValueAtTime (0.000001, now + 8)
+        }
+    }
+
+    // define a method to turn the square on and off
+    toggle () {
+
+        // if already on
+        if (this.running) {
+
+            // make the colour grey
+            this.col     = `grey`
+
+            // set the .running property to false
+            this.running = false
         }
 
-        y_collision (s) {
-            this.vel.y *= -1
-            this.pos.y = this.vel.y > 0 ? s.pos.y + s.len : s.pos.y 
+        // if off
+        else {
+
+            // make the colour pink
+            this.col     = `deeppink`
+
+            // set the .running property to true
+            this.running = true
         }
-        
+    }
+}
+```
+
+<script>
+    // defining a class
+    class Sound_Square {
+
+        // defining a constructor that accepts the arguments 
+        // required to instantiate a new instance of the object
+        constructor (position, length, note, c_context, a_context) {
+
+            // we will treat position as a vector
+            this.pos   = position
+
+            // side length value
+            this.len   = length
+
+            // midi note value
+            this.note  = note
+
+            // reference to the canvas context
+            this.ctx   = c_context
+
+            // reference to the audio context
+            this.audio = a_context
+
+            // calculating the position of the center
+            // of the square
+            const mid_x = this.pos.x + (this.len / 2)
+            const mid_y = this.pos.y + (this.len / 2)
+
+            // storing this position as a vector
+            this.mid = new Vector (mid_x, mid_y)
+
+            // make the squares pink
+            this.col     = `deeppink`
+
+            // on / off state
+            // false value -> silent
+            this.running = true
+
+            // storing a new oscillator
+            // on the object
+            this.osc = this.audio.createOscillator ()
+
+            // lets use a sawtooth oscillator
+            this.osc.type = 'sawtooth'
+
+            // calculate the frequency of the note it should play
+            const cps  = 440 * (2 ** ((this.note - 69) / 12))
+
+            // set the oscillator to that frequency
+            this.osc.frequency.value = cps
+
+            // start the oscillator
+            this.osc.start ()
+
+            // store a new gain node
+            // on the object
+            this.amp = this.audio.createGain ()
+
+            // setting the gain to functional silence
+            this.amp.gain.value = 0.0001
+
+            // we want to create a stereo field
+            // where squares on the left are heard
+            // more in the left channel
+            // so we create a stereo panner node
+            // to store on the object
+            this.pan = this.audio.createStereoPanner ()
+
+            // set it to a value that corresponds with
+            // the x position of the square
+            this.pan.pan.value = (this.mid.x / this.ctx.canvas.width) * 2 - 1
+
+            // wire the nodes together:
+            // osc -> amp -> pan -> output
+            this.osc.connect (this.amp)
+                .connect (this.pan)
+                .connect (this.audio.destination)
+        }
+
+        // define a draw method
+        draw () {
+            // fill with the colour stored in the .col property
+            this.ctx.fillStyle = this.col
+
+            // draw a square at the coordinates held 
+            // in the .pos vector, with a width and height
+            // equal to the value stored in the .len property
+            this.ctx.fillRect (this.pos.x, this.pos.y, this.len, this.len)
+        }
+
+        // when a particle detects that it has collided with a square
+        // it will call this method on the square
+        collision () {
+
+            // only make a sound if the square is running
+            if (this.running) {
+
+                // get the current time from the audio context
+                const now = this.audio.currentTime
+
+                // because many particles will be hitting these squares
+                // the amp node will be recieving lots many competing
+                // sets of instructions.  By cancelling the scheduled
+                // values we are telling the amp that the only set of
+                // instructions that we are interested in is the most 
+                // recent one
+                this.amp.gain.cancelScheduledValues (now)
+
+                // set the gain right now, to what it already is
+                // this might seem redundant, but it helps the API
+                // understand the timing of envelope that it needs to make
+                this.amp.gain.setValueAtTime (this.amp.gain.value, now)
+
+                // ramp from whatever value it was at, to 0.1, in 20 ms
+                this.amp.gain.linearRampToValueAtTime (0.1, now + 0.02)
+
+                // then ramp down exponentially, to 0.000001, in 8 s
+                this.amp.gain.exponentialRampToValueAtTime (0.000001, now + 8)
+            }
+        }
+
+        // define a method to turn the square on and off
+        toggle () {
+
+            // if already on
+            if (this.running) {
+
+                // make the colour grey
+                this.col     = `grey`
+
+                // set the .running property to false
+                this.running = false
+            }
+
+            // if off
+            else {
+
+                // make the colour pink
+                this.col     = `deeppink`
+
+                // set the .running property to true
+                this.running = true
+            }
+        }
     }
 </script>
 
@@ -772,29 +1321,21 @@ Consider the following code:
     cnv_1.height = cnv_1.width * 9 / 16
     cnv_1.style.backgroundColor = 'orange'
     cnv_1.running = false
-    cnv_1.onclick = initiate_sketch
+    cnv_1.onclick = click_handler_1
 
-    function initiate_sketch () {
-        if (!cnv_1.running) {
-            if (audio_context.state != 'running') init_audio ()
-            requestAnimationFrame (draw_frame)
-            cnv_1.running = true
-        }
-    }
 
     const TAU = Math.PI * 2
     const mid = new Vector (cnv_1.width / 2, cnv_1.height / 2)
     const ctx = cnv_1.getContext ('2d')
 
     const particles = []
+    const x = Math.random () * cnv_1.width
+    const y = Math.random () * cnv_1.height
+    const pos = new Vector (x, y)
     for (let i = 0; i < 12; i++) {
-        // const x = Math.random () * cnv_1.width
-        // const y = Math.random () * cnv_1.height
-        // const pos = new Vector (x, y)
-        const pos = mid.clone ()
         const vec = vector_from_angle (i * TAU / 12, 2)
         const acc = new Vector (0, 0)
-        const p = new Particle (pos, vec, acc, ctx, audio_context)
+        const p = new Particle (pos.clone (), vec, acc, ctx, audio_context)
         particles.push (p)
     }
 
@@ -811,7 +1352,7 @@ Consider the following code:
     }
 
     function draw_frame () {
-        ctx.fillStyle = `orange`
+        ctx.fillStyle = `black`
         ctx.fillRect (0, 0, cnv_1.width, cnv_1.height)
         particles.forEach (p => {
             p.move ()
@@ -826,5 +1367,16 @@ Consider the following code:
         requestAnimationFrame (draw_frame)
     }
 
+    function click_handler_1 () {
+        if (!cnv_1.running) {
+            if (audio_context.state != 'running') init_audio ()
+            requestAnimationFrame (draw_frame)
+            cnv_1.running = true
+        }
+        else {
+            squares.forEach (s => s.toggle ())
+        }
+        
+    }
 
 </script>
