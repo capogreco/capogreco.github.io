@@ -18,6 +18,9 @@ categories : RMIT CCS
         const path = `/rmit/ccs/2022/09/03/recursion.html?${ i }`
         recursion_frame.src = `http://thomas.capogre.co` + path
     }
+    else {
+        recursion_frame.src = ''
+    }
 </script>
 
 ```html
