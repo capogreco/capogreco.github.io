@@ -581,7 +581,7 @@ Note that in the above code, the only thing that is making sound is the `play_no
 
 For this next example we will organise our usage of the Web Audio API using **objects**.  
 
-However, for this sketch, I want to use vectors, but I do not want to use the p5 library.  Luckily for us, vectors are fairly simple and we can write an implementation for them ourselves: 
+However, for this sketch, I want to use vectors, but I do not want to use the p5 library.  Luckily for us, vectors are fairly simple and we can write an implementation for them ourselves:
 
 
 
@@ -1325,7 +1325,7 @@ Once we have these classes, we can assemble our sketch on a canvas element:
     cnv_1.height = cnv_1.width * 9 / 16
     cnv_1.style.backgroundColor = 'orange'
 
-    // create a property of that canvase element
+    // create a property of that canvas element
     // called "running" and store on it 
     // the value "false"
     cnv_1.running = false
@@ -1498,7 +1498,7 @@ This is what it looks like:
     cnv_1.height = cnv_1.width * 9 / 16
     cnv_1.style.backgroundColor = 'orange'
 
-    // create a property of that canvase element
+    // create a property of that canvas element
     // called "running" and store on it 
     // the value "false"
     cnv_1.running = false
@@ -1659,4 +1659,5 @@ This is what it looks like:
     }
 </script>
 
-Note that each synth lives in a square, which means there can only ever by four synths at a time.  This is a nice affordance in this sketch in particular, because as the particles eventually find homes on the surfaces of the squares, each collision simply keeps open the amp node on that square, rather than creating a whole new synth.  The result is that the squares come to represent a droning chord, rather than a distorted cacophony of synth hits.
+Note that each synth lives in a square, which means there can only ever by four synths at a time.  This is a nice affordance in this sketch in particular, because as the particles eventually find homes on the surfaces of the squares, each collision simply keeps open the amp node on that square, rather than creating a whole new synth.  The result is that after a few minutes, the squares come to represent a droning chord, rather than a distorted cacophony of discrete synth hits.
+
