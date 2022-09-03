@@ -581,7 +581,7 @@ Note that in the above code, the only thing that is making sound is the `play_no
 
 For this next example we will organise our usage of the Web Audio API using **objects**.  
 
-However, for this sketch, I will want to use `Vector` objects, are part of the p5 library.  Luckily for us, the vectors are fairly simple and we can write an implementation ourselves: 
+However, for this sketch, I want to use vectors, but I do not want to use the p5 library.  Luckily for us, vectors are fairly simple and we can write an implementation for them ourselves: 
 
 
 
