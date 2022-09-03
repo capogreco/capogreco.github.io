@@ -5,8 +5,8 @@ date       : 2022-09-03
 categories : RMIT CCS
 ---
 
-<iframe  id='recursion'>
-</iframe>
+<iframe  id='recursion'></iframe>
+
 <script>
     const recursion_frame = document.getElementById ('recursion')
     console.dir (recursion_frame)
@@ -14,6 +14,21 @@ categories : RMIT CCS
     recursion_frame.height = recursion_frame.width
     const i = !location.search ? 1 :
       Number (location.search.split ("?").pop ()) + 1
-    const url = `http://thomas.capogre.co/rmit/ccs/2022/09/03/recursion.html?${ i }`
-    recursion_frame.src=url
+    const path = `/rmit/ccs/2022/09/03/recursion.html?${ i }`
+    recursion_frame.src = `http://thomas.capogre.co` + path
 </script>
+
+```html
+<iframe  id='recursion'></iframe>
+
+<script>
+    const recursion_frame = document.getElementById ('recursion')
+    console.dir (recursion_frame)
+    recursion_frame.width = recursion_frame.parentNode.scrollWidth
+    recursion_frame.height = recursion_frame.width
+    const i = !location.search ? 1 :
+      Number (location.search.split ("?").pop ()) + 1
+    const path = `/rmit/ccs/2022/09/03/recursion.html?${ i }`
+    recursion_frame.src = `http://thomas.capogre.co` + path
+</script>
+```
