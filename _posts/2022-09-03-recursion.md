@@ -9,7 +9,6 @@ categories : RMIT CCS
 
 <script>
     const recursion_frame = document.getElementById ('recursion')
-    console.dir (recursion_frame)
     recursion_frame.width = recursion_frame.parentNode.scrollWidth
     recursion_frame.height = recursion_frame.width
     const i = !location.search ? 1 :
@@ -28,7 +27,6 @@ categories : RMIT CCS
 
 <script>
     const recursion_frame = document.getElementById ('recursion')
-    console.dir (recursion_frame)
     recursion_frame.width = recursion_frame.parentNode.scrollWidth
     recursion_frame.height = recursion_frame.width
     const i = !location.search ? 1 :
@@ -299,7 +297,7 @@ Looks like the new `.rotate ()` method is working as intended:
 
 A quick note -- because the function `tick` above uses `setTimeout` to call itself, already, we are using recursion.
 
-##  Recursive Fractal Trees
+##  Fractal Tree via Recursive Function
 
 from [this video](https://youtu.be/0jjeOYMjmDU).
 
@@ -307,18 +305,232 @@ from [this video](https://youtu.be/0jjeOYMjmDU).
 <canvas id='fractal_tree_0'></canvas>
 
 <script type='module'>
+
+    // get and format canvas
     const cnv = document.getElementById ('fractal_tree_0')
+    cnv.width = cnv.parentNode.scrollWidth
+    cnv.height = cnv.width * 9 / 16
+
+    // get canvas context
+    const ctx = cnv.getContext ('2d')
+
+    // this is the recursive function that will draw the tree
+    // it accepts three arguments:
+    // base: vector describing the starting position
+    // stem: vector describing the new line
+    // generation: integer limiting the number of recursions
+    function tree (base, stem, generation) {
+
+        // start with the base position
+        // we want to tranform it, so we make a copy
+        const end = base.clone ()
+
+        // add the stem to the start position
+        end.add (stem)
+
+        // draw the line from the start point
+        // to the end point
+        ctx.beginPath ()
+        ctx.moveTo (base.x, base.y)
+        ctx.lineTo (end.x, end.y)
+        ctx.stroke ()
+
+        // if generations is still positive
+        if (generation > 0) {
+
+            // clone the stem
+            const L_stem = stem.clone ()
+
+            // rotate it anti-clockwise
+            L_stem.rotate (-TAU / 7)
+
+            // reduce the length
+            L_stem.mult (0.6)
+
+            // clone the stem again
+            const R_stem = stem.clone ()
+
+            // rotate this one clockwise
+            R_stem.rotate (TAU / 7)
+
+            // reduce its length
+            R_stem.mult (0.6)
+
+            // decrease generation by 1
+            const next_gen = generation - 1
+
+            // recursively call tree, with end as the new base
+            // L_stem & R_stem as the new stems
+            // and next_gen as the new generation
+            tree (end, L_stem, next_gen)
+            tree (end, R_stem, next_gen)
+        }
+    }
+
+    // new vector defining the starting point of our tree
+    const seed = new Vector (cnv.width / 2, cnv.height)
+
+    // new vector defining the first stem
+    // ie. 150 pixels straight up
+    const shoot = new Vector (0, -150)
+
+    // pass seed in as the base argument
+    // shoot as the stem argument
+    // and 7, denoting that we want 7 recursions
+    tree (seed, shoot, 7)
+</script>
+
+```html
+<canvas id='fractal_tree_0'></canvas>
+
+<script type='module'>
+
+    // get and format canvas
+    const cnv = document.getElementById ('fractal_tree_0')
+    cnv.width = cnv.parentNode.scrollWidth
+    cnv.height = cnv.width * 9 / 16
+
+    // get canvas context
+    const ctx = cnv.getContext ('2d')
+
+    // this is the recursive function that will draw the tree
+    // it accepts three arguments:
+    // base: vector describing the starting position
+    // stem: vector describing the new line
+    // generation: integer limiting the number of recursions
+    function tree (base, stem, generation) {
+
+        // start with the base position
+        // we want to tranform it, so we make a copy
+        const end = base.clone ()
+
+        // add the stem to the start position
+        end.add (stem)
+
+        // draw the line from the start point
+        // to the end point
+        ctx.beginPath ()
+        ctx.moveTo (base.x, base.y)
+        ctx.lineTo (end.x, end.y)
+        ctx.stroke ()
+
+        // if generations is still positive
+        if (generation > 0) {
+
+            // clone the stem
+            const L_stem = stem.clone ()
+
+            // rotate it anti-clockwise
+            L_stem.rotate (-TAU / 7)
+
+            // reduce the length
+            L_stem.mult (0.6)
+
+            // clone the stem again
+            const R_stem = stem.clone ()
+
+            // rotate this one clockwise
+            R_stem.rotate (TAU / 7)
+
+            // reduce its length
+            R_stem.mult (0.6)
+
+            // decrease generation by 1
+            const next_gen = generation - 1
+
+            // recursively call tree, with end as the new base
+            // L_stem & R_stem as the new stems
+            // and next_gen as the new generation
+            tree (end, L_stem, next_gen)
+            tree (end, R_stem, next_gen)
+        }
+    }
+
+    // new vector defining the starting point of our tree
+    const seed = new Vector (cnv.width / 2, cnv.height)
+
+    // new vector defining the first stem
+    // ie. 150 pixels straight up
+    const shoot = new Vector (0, -150)
+
+    // pass seed in as the base argument
+    // shoot as the stem argument
+    // and 7, denoting that we want 7 recursions
+    tree (seed, shoot, 7)
+</script>
+```
+
+We can randomise things somewhat to get some interesting results:
+
+<canvas id='fractal_tree_1'></canvas>
+
+<script type='module'>
+    const cnv = document.getElementById ('fractal_tree_1')
     cnv.width = cnv.parentNode.scrollWidth
     cnv.height = cnv.width * 9 / 16
 
     const ctx = cnv.getContext ('2d')
 
-    const mid = new Vector (cnv.width / 2, cnv.height / 2)
+    // define a function to return a random value
+    // between a minimum and maximum
+    function rand_between (min, max) {
+        const dif = max - min
+        const off = Math.random () * dif
+        return  min + off
+    }
 
-    ctx.beginPath ()
-    ctx.moveTo (mid.x, cnv.height)
-    ctx.lineTo (mid.x, mid.y)
-    ctx.stroke ()
+
+    function tree (base, stem, generation, options) {
+
+        const end = base.clone ()
+        end.add (stem)
+
+        ctx.beginPath ()
+        ctx.moveTo (base.x, base.y)
+        ctx.lineTo (end.x, end.y)
+        ctx.stroke ()
+
+
+        if (generation > 0) {
+            const L_stem = stem.clone ()
+            L_stem.rotate (options.angle.l)
+            L_stem.mult (options.mult.l)
+
+            const R_stem = stem.clone ()
+            R_stem.rotate (options.angle.r)
+            R_stem.mult (options.mult.r)
+
+            const next_gen = generation - 1
+
+            tree (end, L_stem, next_gen, options)
+            tree (end, R_stem, next_gen, options)
+        }
+    }
+
+    const seed = new Vector (cnv.width / 2, cnv.height)
+    const shoot = new Vector (0, -150)
+
+    function new_tree () {
+        ctx.fillStyle = `white`
+        ctx.fillRect (0, 0, cnv.width, cnv.height)
+
+        const options = {
+            mult : {
+                l : rand_between (0.5, 0.8),
+                r : rand_between (0.5, 0.8),
+            },
+
+            angle : {
+                l : rand_between (TAU / 12, TAU / 4) * -1,
+                r : rand_between (TAU / 12, TAU / 4),
+            }
+        }
+
+        tree (seed, shoot, 8, options)
+    }
+
+    cnv.onclick = new_tree
+
+    new_tree ()
 
 </script>
-
