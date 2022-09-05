@@ -42,12 +42,15 @@ categories : RMIT CCS
 
 **also inspired by [this blog](https://www.bryanbraun.com/2021/03/24/infinitely-nested-iframes/) post by Bryan Braun 🤓
 
----
+## To understand recursion
 
-At its heart, recursion is self-reference. Recursive functions are functions that call themselves.  You could call it a fancy way of iterating, but I believe the history of recursive functions may in fact pre-date for-loops, so maybe a better description might be **the OG way of iterating**.  However, recursion can do branching self-similarity, something which is very clunky, if not impossible, to engineer with `for` loops.  We will explore the idea of branching self-similarity in the examples that follow.
+... you must first understand recursion.
 
 
-This post will explore some of the ideas from [The Coding Train: Algorithmic Botany](https://thecodingtrain.com/tracks/algorithmic-botany), which we will endeavour to recreate without p5, in vanilla javascript (ie. with [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)).
+At its heart, recursion is self-reference. Recursive functions are functions that call themselves.  You could call it a fancy way of iterating, but I believe the history of recursive functions may in fact pre-date for-loops, so maybe a better description might be **the OG way of iterating**.  However, recursion can do branching self-similarity, something which is very clunky, if not impossible, to engineer merely with for-loops.  We will explore the idea of branching self-similarity in the examples that follow.
+
+
+This post will explore some of the ideas from [The Coding Train: Algorithmic Botany](https://thecodingtrain.com/tracks/algorithmic-botany), which we will endeavour to recreate without p5, in plain javascript (ie. with [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)).
 
 ##  Vectors: a sensible provision
 
@@ -1123,3 +1126,15 @@ There are many good resources on recursion:
 -   [Web Dev Simplified: What is Recursion - In Depth](https://youtu.be/6oDQaB2one8)
 -   [Reducible: 5 Simple Steps for Solving Any Recursive Problem](https://youtu.be/ngCos392W4w)
 -   [Computerphile: Programming Loops vs Recursion](https://youtu.be/HXNhEYqFo0o)
+
+
+<iframe id='recursive_rectangles'></iframe>
+
+<script>
+    const iframe = document.getElementById ('recursive_rectangles')
+    iframe.src = "https://editor.p5js.org/capogreco/full/iVA1FtAex"
+    iframe.width = iframe.parentNode.scrollWidth
+    iframe.height = (iframe.width * 9 / 16) + 42
+</script>
+
+<br>
