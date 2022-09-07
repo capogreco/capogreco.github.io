@@ -182,6 +182,7 @@ function draw_frame () {
 ```
 
 <p align=CENTER> <canvas id='example_3'></canvas> </p>
+
 <script>
     const cnv_3  = document.getElementById (`example_3`)
     cnv_3.width  = 400
