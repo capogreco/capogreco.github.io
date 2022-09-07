@@ -1659,5 +1659,5 @@ This is what it looks like:
     }
 </script>
 
-Note that each synth lives in a square, which means there can only ever by four synths at a time.  This is a nice affordance in this sketch in particular, because as the particles eventually find homes on the surfaces of the squares, each collision simply keeps open the amp node on that square, rather than creating a whole new synth.  The result is that after a few minutes, the squares come to represent a droning chord, rather than a distorted cacophony of discrete synth hits.
+Note that each synth lives in a square, which means there can only ever be four synths at a time.  This is a nice affordance in this sketch in particular, because as the particles eventually find homes on the surfaces of the squares, each collision simply keeps open the amp node on that square, rather than creating a whole new synth.  The result is that after a few minutes, the squares come to represent a droning chord, rather than a distorted cacophony of discrete synth hits.
 
