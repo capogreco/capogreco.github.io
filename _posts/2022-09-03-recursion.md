@@ -52,6 +52,8 @@ At its heart, recursion is self-reference. Recursive functions are functions tha
 
 This post will explore some of the ideas from [The Coding Train: Algorithmic Botany](https://thecodingtrain.com/tracks/algorithmic-botany), which we will endeavour to recreate without p5, in plain javascript (ie. with [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)).
 
+*edit: The Coding Train have since made video employing recursion to code a fractal tree on an Apple II+. Have a look [here](https://youtu.be/UNkHditYGls).*
+
 ##  Vectors: a sensible provision
 
 First let's define a `Vector` class to help manage some of the trigonometry we will need to use:
@@ -1126,7 +1128,6 @@ There are many good resources on recursion:
 -   [Web Dev Simplified: What is Recursion - In Depth](https://youtu.be/6oDQaB2one8)
 -   [Reducible: 5 Simple Steps for Solving Any Recursive Problem](https://youtu.be/ngCos392W4w)
 -   [Computerphile: Programming Loops vs Recursion](https://youtu.be/HXNhEYqFo0o)
-
 
 <iframe id='recursive_rectangles'></iframe>
 
