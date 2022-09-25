@@ -440,7 +440,7 @@ function play_note (note, length) {
 
 Two aspects of this code are particularly noteworthy.  
 
-The first is how all of the Web Audio API nodes we create and use are assigned to variables which exist within the local scope of the function, which means a seperate audio graph is created each time the function is called.  At the end, when `osc.stop ()` is eventually called, the oscillator node stops and the audio graph associated with it is removed by javascript's [garbage collector](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management).  So we can have a proliferation of notes, each of which will disappear on its own accord, and we won't need to worry about managing them beyond their initial instatiation in the function call.
+The first is how all of the Web Audio API nodes we create and use are assigned to variables which exist within the local scope of the function, which means a seperate audio graph is created each time the function is called.  At the end, when `osc.stop ()` is eventually called, the oscillator node stops and the audio graph associated with it is removed by javascript's [garbage collector](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management).  So we can have a proliferation of notes, each of which will disappear on its own accord, and we won't need to worry about managing them beyond their initial instantiation in the function call.
 
 The second aspect is how we are interfacing with the amp node's `.gain` property.  The object stored as the `.gain` property of a gain node is in fact an [AudioParam](https://developer.mozilla.org/en-US/docs/Web/API/AudioParam). Web Audio API uses **AudioParams** to modulate attributes of nodes in real time.  If timing is not important, we can simply assign a value to the `.value` property of an **AudioParam**.  The `.setValueAtTime ()`, `.linearRampToValueAtTime ()`, and `.exponentialRampToValueAtTime ()` methods are more exact and more flexible, allowing us to create [envelopes](https://en.wikipedia.org/wiki/Envelope_(music)).  Furthermore, it is possible for us to connect a node output to another node's **AudioParam**, allowing for [LFOs](https://en.wikipedia.org/wiki/Low-frequency_oscillation) and [frequency modulation](https://en.wikipedia.org/wiki/Frequency_modulation).  Although these specific topics fall outside the scope of this blog post, I may return to them in a future post.
 
@@ -680,7 +680,7 @@ Consider the following `class` definition:
 class Particle {
 
     // defining the arguments we will need to 
-    // instatiate a new instance of the class
+    // instantiate a new instance of the class
     constructor (position, velocity, acceleration, c_context) {
 
         // we will treat position, velocity, 
@@ -845,7 +845,7 @@ class Particle {
     class Particle {
 
         // defining the arguments we will need to 
-        // instatiate a new instance of the class
+        // instantiate a new instance of the class
         constructor (position, velocity, acceleration, c_context) {
 
             // we will treat position, velocity, 
