@@ -473,7 +473,7 @@ function handler (incoming_req) {
 }
 ```
 
-... and the following `client.js` code:
+... and the following `script.js` client code:
 
 ```js
 const socket = new WebSocket (`ws://localhost/`)
