@@ -407,7 +407,7 @@ In order to transmit data from one client to another, we need to do two things:
 
 We can use `JSON.stringify ()` to turn an object containing our data into a string, and then use `JSON.parse ()` to turn it back into an object once it has been received on the other end.  You can read about `JSON.stringify ()` [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify), and `JSON.parse ()` [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse).  
 
-In order to send data to all the sockets, the server needs to keep track of ther sockets that have been opened.  When a socket is opened we could, for example, `.push ()` it to a global array, which we can then be iterated over to access all the sockets.
+In order to send data to all the sockets, the server needs some way of keeping track of the sockets that have been opened.  When a socket is opened we could, for example, `.push ()` it to a global array, which can then be iterated over to access all the sockets.
 
 Consider the following `server.js` code:
 
